@@ -37,41 +37,41 @@ public class PicrossBoard {
         buildBoards(); // initialize boards
     }
     
-    PicrossBoard(String fileName)
+    PicrossBoard( String fileName )
     {
         this(); // call default constructor
-        readFile(fileName);
+        readFile( fileName );
     }
     
     
-    void readFile(String fileName)
+    void readFile( String fileName )
     {
         FileReader fr;
         Scanner inFile;
         try
         {
-            fr = new FileReader(fileName);
-            inFile = new Scanner(fr);
+            fr = new FileReader( fileName );
+            inFile = new Scanner( fr );
              
-            for(int i = 0; i < row; i++)
+            for( int i = 0; i < row; i++ )
             {
-                for(int j = 0; j < col; j++)
+                for( int j = 0; j < col; j++ )
                 {
                     solution[i][j] = inFile.nextInt();
-                    if(solution[i][j] == 1)
+                    if( solution[i][j] == 1 )
                         fill++;
                 }
             }
             
             inFile.close();
-        }catch(Exception e)
+        }catch( Exception e )
         {
-            System.err.println("Unable to read file");
-            System.exit(-1);
+            System.err.println( "Unable to read file" );
+            System.exit( -1 );
         }
     }
     
-    // initializes the board that the user interacts with
+    // initializes both boards that the user interacts with
     void buildBoards()
     {
         for( int i = 0; i < row; i++ )
@@ -87,7 +87,7 @@ public class PicrossBoard {
     // no matter what, change space to empty ( 0 )
     void remove( int i, int j )
     {
-        if(board[i][j] == 1)
+        if( board[i][j] == 1 )
             fillCount--;
         
         board[i][j] = 0;
@@ -126,11 +126,11 @@ public class PicrossBoard {
     // else return false
     boolean checkSolution()
     {
-        for(int i = 0; i < row; i++)
+        for( int i = 0; i < row; i++ )
         {
-            for(int j = 0; j < col; j++)
+            for( int j = 0; j < col; j++ )
             {
-                if(solution[i][j] != board[i][j])
+                if( solution[i][j] != board[i][j] )
                     return false;
             }
         }
@@ -140,13 +140,13 @@ public class PicrossBoard {
     
     void printBoard()
     {
-        for(int i = 0; i < row; i++)
+        for( int i = 0; i < row; i++ )
         {
-            for(int j = 0; j < col; j++)
+            for( int j = 0; j < col; j++ )
             {
-                if(board[i][j] == 1)
+                if( board[i][j] == 1 )
                     System.out.print( "O " );
-                else if (board[i][j] == 2)
+                else if ( board[i][j] == 2 )
                     System.out.print( "X " );
                 else
                     System.out.print( "  " );
