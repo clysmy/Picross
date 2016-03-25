@@ -22,6 +22,8 @@ import java.util.Scanner;
 public class PicrossBoard {
     private int solution[][];
     private int board[][];
+    private int rowHints[][];
+    private int colHints[][];
     private int row = 10;
     private int col = 10;
     private int fillCount = 0;
@@ -34,6 +36,8 @@ public class PicrossBoard {
         // separated by space?
         solution = new int[10][10];
         board = new int[10][10];
+        rowHints = new int[10][5];
+        colHints = new int[10][5];
         buildBoards(); // initialize boards
     }
     
@@ -41,8 +45,99 @@ public class PicrossBoard {
     {
         this(); // call default constructor
         readFile( fileName );
+        buildHints();
     }
     
+    // hints for 10x10 is at most five in a line (1 1 1 1 1)
+    void buildHints()
+    {
+        int hint = 0;
+        int hintNum = 0;
+        // build row hints first
+        for( int i = 0; i < row; i++ )
+        {
+            for( int j = 0; j < col; j++ )
+            {
+                if(solution[i][j] == 1)
+                    hint++;
+                else
+                {
+                    if( hintNum < 5 && hint > 0)
+                    {
+                        rowHints[i][hintNum] = hint;
+                        hintNum++;
+                        hint = 0;
+                    }
+                    
+                }
+            }
+            if( hint > 0)
+            {
+                rowHints[i][hintNum] = hint;
+            }
+            hintNum = 0;
+            hint = 0;
+        }
+        hint = 0;
+        hintNum = 0;
+        // build col hints
+        for( int j = 0; j < row; j++ )
+        {
+            for( int i = 0; i < col; i++ )
+            {
+                if(solution[i][j] == 1)
+                    hint++;
+                else
+                {
+                    if( hintNum < 5 && hint > 0)
+                    {
+                        colHints[j][hintNum] = hint;
+                        hintNum++;
+                        hint = 0;
+                    }
+                    
+                }
+            }
+            if( hint > 0)
+            {
+                colHints[j][hintNum] = hint;
+            }
+            hintNum = 0;
+            hint = 0;
+        }
+    }
+    
+    void printHints()
+    {
+        System.out.println("Rows");
+        for( int i = 0; i < row; i++ )
+        {
+            for( int j = 0; j < 5; j++)
+            {
+                if(rowHints[i][j] != 0)
+                    System.out.print(rowHints[i][j] + " ");
+            }
+            if(rowHints[i][0] == 0 && rowHints[i][4] == 0)
+                System.out.print(0);
+            
+            System.out.println();
+        }
+        
+        System.out.println("Columns");
+        for( int i = 0; i < row; i++ )
+        {
+            for( int j = 0; j < 5; j++)
+            {
+                if(colHints[i][j] != 0)
+                    System.out.print(colHints[i][j] + " ");
+            }
+            if(colHints[i][0] == 0 && colHints[i][4] == 0)
+                System.out.print(0);
+            
+            System.out.println();
+        }
+        
+    }
     
     void readFile( String fileName )
     {
