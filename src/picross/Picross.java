@@ -54,6 +54,7 @@ public class Picross {
                     {
                         System.out.println("Success!");
                         game.printBoard();
+                        break;
                     }      
                 }
                 else if(choice == 2)
