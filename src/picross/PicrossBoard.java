@@ -25,45 +25,51 @@ public class PicrossBoard {
     private int rowHints[][];
     private int colHints[][];
     private int row = 10;
+    private int rowHintMax = 5;
     private int col = 10;
+    private int colHintMax = 5;
     private int fillCount = 0;
     private int fill = 0;
     
-    PicrossBoard()
+    /*PicrossBoard()
     {
         // read file
         // just 10 x 10 boards for now
         // separated by space?
-        solution = new int[10][10];
-        board = new int[10][10];
-        rowHints = new int[10][5];
-        colHints = new int[10][5];
+        //solution = new int[10][10];
+        //board = new int[10][10];
+        //rowHints = new int[10][5];
+        //colHints = new int[10][5];
         buildBoards(); // initialize boards
-    }
+    }*/
     
     PicrossBoard( String fileName )
     {
-        this(); // call default constructor
+        //this(); // call default constructor
         readFile( fileName );
-        buildHints();
+        fillHints();
     }
     
     // hints for 10x10 is at most five in a line (1 1 1 1 1)
-    void buildHints()
+    void fillHints()
     {
         int hint = 0;
         int hintNum = 0;
-        // build row hints first
+        
+        // fill row hints first
         for( int i = 0; i < row; i++ )
         {
             for( int j = 0; j < col; j++ )
             {
+                // loop until there is a mark, then count adjacent ones
                 if(solution[i][j] == 1)
                     hint++;
                 else
                 {
-                    if( hintNum < 5 && hint > 0)
+                    // otherwise no mark
+                    if( hintNum < rowHintMax && hint > 0)
                     {
+                        // check if currently in a mark sequence
                         rowHints[i][hintNum] = hint;
                         hintNum++;
                         hint = 0;
@@ -78,9 +84,11 @@ public class PicrossBoard {
             hintNum = 0;
             hint = 0;
         }
+        
         hint = 0;
         hintNum = 0;
-        // build col hints
+        
+        // fill col hints
         for( int j = 0; j < row; j++ )
         {
             for( int i = 0; i < col; i++ )
@@ -89,7 +97,7 @@ public class PicrossBoard {
                     hint++;
                 else
                 {
-                    if( hintNum < 5 && hint > 0)
+                    if( hintNum < colHintMax && hint > 0)
                     {
                         colHints[j][hintNum] = hint;
                         hintNum++;
@@ -139,6 +147,9 @@ public class PicrossBoard {
         
     }
     
+    // file structure
+    // first two numbers: ROW# COL#
+    // afterwards, the rest is the board
     void readFile( String fileName )
     {
         FileReader fr;
@@ -147,7 +158,31 @@ public class PicrossBoard {
         {
             fr = new FileReader( fileName );
             inFile = new Scanner( fr );
-             
+            
+            row = inFile.nextInt();
+            col = inFile.nextInt();
+            
+            // with row and col read, initialize arrays
+            solution = new int[row][col];
+            board = new int[row][col];
+            
+            buildBoards();
+            
+            if(row % 2 == 0)
+                rowHintMax = row / 2;
+            else
+                rowHintMax = ( row / 2 ) + 1;
+            
+            if( col % 2 == 0 )
+                colHintMax = col / 2;
+            else
+                colHintMax = ( col / 2 ) + 1;
+            
+            rowHints = new int[row][rowHintMax];
+            colHints = new int[col][colHintMax];
+            buildHints();
+            
+            // begin reading board solution
             for( int i = 0; i < row; i++ )
             {
                 for( int j = 0; j < col; j++ )
@@ -175,6 +210,26 @@ public class PicrossBoard {
             {
                 board[i][j] = 0;
                 solution[i][j] = 0;
+            }
+        }
+    }
+    
+    // initializes both hint lines
+    void buildHints()
+    {
+        for( int i = 0; i < row; i++ )
+        {
+            for( int j = 0; j < rowHintMax; j++ )
+            {
+                rowHints[i][j] = 0;
+            }
+        }
+        
+        for( int i = 0; i < col; i++ )
+        {
+            for( int j = 0; j < colHintMax; j++ )
+            {
+                colHints[i][j] = 0;
             }
         }
     }
