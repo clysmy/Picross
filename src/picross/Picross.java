@@ -15,55 +15,55 @@ public class Picross {
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) {
+    public static void main( String[] args ) {
         // TODO code application logic here
         
-        PicrossBoard game = new PicrossBoard( "src\\picross\\board1.txt" );
+        PicrossBoard game = new PicrossBoard( "src\\picross\\board2.txt" );
         
-        while(true)
+        while( true )
         {
             Scanner sc = new Scanner(System.in);
             game.printBoard();
             game.printHints();
             
-            System.out.println("What would you like to do?");
-            System.out.println(" (1) Add fill");
-            System.out.println(" (2) Add Mark");
-            System.out.println(" (3) Remove");
+            System.out.println( "What would you like to do?" );
+            System.out.println( " (1) Add fill" );
+            System.out.println( " (2) Add Mark" );
+            System.out.println( " (3) Remove" );
             
-            System.out.println(" (0) Exit");
+            System.out.println( " (0) Exit" );
             int choice = 0;
            
             choice = sc.nextInt(); 
 
-            System.out.println(choice);
+            System.out.println( choice );
             int i = 0;
             int j = 0;
 
-            if(choice != 0)
+            if( choice != 0 )
             {
-                System.out.print("Please enter i number: ");
+                System.out.print( "Please enter i number: " );
                 i = sc.nextInt(); 
 
-                System.out.print("Please enter j number: ");
+                System.out.print( "Please enter j number: " );
                 j = sc.nextInt(); 
 
-                if(choice == 1)
+                if( choice == 1 )
                 {
-                    if(game.add(i, j, true))
+                    if( game.add( i, j, true ) )
                     {
-                        System.out.println("Success!");
+                        System.out.println( "Success!" );
                         game.printBoard();
                         break;
                     }      
                 }
-                else if(choice == 2)
+                else if( choice == 2 )
                 {
-                    game.add(i, j, false);
+                    game.add( i, j, false );
                 }
                 else
                 {
-                    game.remove(i, j);
+                    game.remove( i, j );
                 }
             }
             else
@@ -71,7 +71,7 @@ public class Picross {
                 break;
             } 
         }
-        System.out.println("Thanks for playing!");
+        System.out.println( "Thanks for playing!" );
     }
     
 }

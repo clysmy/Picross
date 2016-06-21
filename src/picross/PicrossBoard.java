@@ -62,7 +62,7 @@ public class PicrossBoard {
             for( int j = 0; j < col; j++ )
             {
                 // loop until there is a mark, then count adjacent ones
-                if(solution[i][j] == 1)
+                if( solution[i][j] == 1 )
                     hint++;
                 else
                 {
@@ -77,7 +77,7 @@ public class PicrossBoard {
                     
                 }
             }
-            if( hint > 0)
+            if( hint > 0 )
             {
                 rowHints[i][hintNum] = hint;
             }
@@ -89,11 +89,11 @@ public class PicrossBoard {
         hintNum = 0;
         
         // fill col hints
-        for( int j = 0; j < row; j++ )
+        for( int j = 0; j < col; j++ )
         {
-            for( int i = 0; i < col; i++ )
+            for( int i = 0; i < row; i++ )
             {
-                if(solution[i][j] == 1)
+                if( solution[i][j] == 1 )
                     hint++;
                 else
                 {
@@ -106,7 +106,7 @@ public class PicrossBoard {
                     
                 }
             }
-            if( hint > 0)
+            if( hint > 0 )
             {
                 colHints[j][hintNum] = hint;
             }
@@ -117,33 +117,34 @@ public class PicrossBoard {
     
     void printHints()
     {
-        System.out.println("Rows");
+        System.out.println( "Rows" );
         for( int i = 0; i < row; i++ )
         {
-            for( int j = 0; j < 5; j++)
+            for( int j = 0; j < rowHintMax; j++ )
             {
-                if(rowHints[i][j] != 0)
-                    System.out.print(rowHints[i][j] + " ");
+                if( rowHints[i][j] != 0 )
+                    System.out.print(rowHints[i][j] );
             }
-            if(rowHints[i][0] == 0 && rowHints[i][4] == 0)
-                System.out.print(0);
+            if( rowHints[i][0] == 0 && rowHints[i][rowHintMax - 1] == 0 )
+                System.out.print( 0 );
             
             System.out.println();
         }
         
-        System.out.println("Columns");
-        for( int i = 0; i < row; i++ )
+        System.out.println( "Columns" );
+        for( int i = 0; i < col; i++ )
         {
-            for( int j = 0; j < 5; j++)
+            for( int j = 0; j < colHintMax; j++)
             {
-                if(colHints[i][j] != 0)
-                    System.out.print(colHints[i][j] + " ");
+                if( colHints[i][j] != 0 )
+                    System.out.print( colHints[i][j] );
             }
-            if(colHints[i][0] == 0 && colHints[i][4] == 0)
-                System.out.print(0);
+            if( colHints[i][0] == 0 && colHints[i][colHintMax - 1] == 0 )
+                System.out.print( 0 );
             
-            System.out.println();
+            System.out.print( " " );
         }
+        System.out.println();
         
     }
     
@@ -168,7 +169,7 @@ public class PicrossBoard {
             
             buildBoards();
             
-            if(row % 2 == 0)
+            if( row % 2 == 0 )
                 rowHintMax = row / 2;
             else
                 rowHintMax = ( row / 2 ) + 1;
